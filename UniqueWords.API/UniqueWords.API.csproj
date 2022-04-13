@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\UniqueWords.Core\UniqueWords.Core.csproj" />
     <ProjectReference Include="..\UniqueWords.Database\UniqueWords.Database.csproj" />
   </ItemGroup>
 
