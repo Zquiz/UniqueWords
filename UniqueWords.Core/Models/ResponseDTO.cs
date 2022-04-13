@@ -9,7 +9,6 @@ namespace UniqueWords.Core.Models
     public class ResponseDTO
     {
         public int DistinctUniqueWords { get; set; }
-        public int DistinctUniqueWordsInDatabase { get; set; }
         public string[] WatchlistWords { get; set; }
     }
 }

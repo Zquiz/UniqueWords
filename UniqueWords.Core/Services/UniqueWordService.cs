@@ -35,8 +35,7 @@ namespace UniqueWords.Core.Services
                 });
 
 
-            result.DistinctUniqueWordsInDatabase = await _context.UniqueWordList.CountAsync();
-            result.DistinctUniqueWords = listWords.Distinct().Count();
+            result.DistinctUniqueWords = await _context.UniqueWordList.CountAsync();
             result.WatchlistWords = await _context.WatchList.Where(x => listWords.Select(y => y.UniqueWordName).Contains(x.WatchedWord)).Select(x => x.WatchedWord).ToArrayAsync();
             return result;
         }
