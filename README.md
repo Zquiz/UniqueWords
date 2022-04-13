@@ -29,8 +29,9 @@ using (SqlConnection connection = new SqlConnection(connString))
 this.dataTable.Clear();
 ```
 
-1. Run the migrations so the database and tabels will get added or run the following first
-2. Creating the database.
+1. Run the migrations so the database and tabels will get added by using the PMC and command update-datebase (this will skip all other steps)
+2. or run the following first
+3. Creating the database.
 ```
 USE [master]
 GO
