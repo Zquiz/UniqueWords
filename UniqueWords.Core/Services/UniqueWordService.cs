@@ -23,9 +23,9 @@ namespace UniqueWords.Core.Services
             var result = new ResponseDTO();
 
             var listWords = text.Split(' ')
-                .Select(x => new UniqueWordList()
-                { UniqueWordName = x.ToLower()})         
-                .Distinct()
+                .GroupBy(x => x.ToLower())
+                .Select(x =>  new UniqueWordList()
+                { UniqueWordName = x.Key})         
                 .ToList();
 
             _context.BulkInsert(listWords, x =>
@@ -35,7 +35,8 @@ namespace UniqueWords.Core.Services
                 });
 
 
-            result.DistinctUniqueWords = await _context.UniqueWordList.CountAsync();
+            result.DistinctUniqueWordsInDatabase = await _context.UniqueWordList.CountAsync();
+            result.DistinctUniqueWords = listWords.Distinct().Count();
             result.WatchlistWords = await _context.WatchList.Where(x => listWords.Select(y => y.UniqueWordName).Contains(x.WatchedWord)).Select(x => x.WatchedWord).ToArrayAsync();
             return result;
         }
@@ -44,8 +45,9 @@ namespace UniqueWords.Core.Services
             if (!string.IsNullOrWhiteSpace(model.Word))
             {
                 var words = model.Word.Split(' ')
+                     .GroupBy(x => x.ToLower())
                     .Select(x => new WatchList()
-                    { WatchedWord = x.ToLower() })
+                    { WatchedWord = x.Key })
                     .Distinct()
                     .ToList();
                 _context.BulkInsert(words, x =>
